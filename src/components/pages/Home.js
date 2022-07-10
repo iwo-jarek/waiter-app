@@ -1,9 +1,7 @@
-import Tables from "../../features/tables";
+import Tables from "../../features/Tables";
 
 const Home = () => {
-  return (
-  <Tables />
-  );
+  return <Tables />;
 };
 
 export default Home;
