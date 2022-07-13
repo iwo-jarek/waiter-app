@@ -3,18 +3,18 @@ import shortid from "shortid";
 //selectors
 export const getAllTables = (state) => state.tables;
 export const getTableById = ({ tables }, tableId) =>
-  tables.find((post) => post.id === tableId);
+  tables.find((table) => table.id === tableId);
 
 // actions
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName("UPDATE_TABLES");
 const EDIT_TABLE = createActionName("EDIT_TABLES");
-const ADD_TABLE = createActionName("ADD_TABLE");
+// const ADD_TABLE = createActionName("ADD_TABLE");
 
 // action creators
 export const updateTables = (payload) => ({ type: UPDATE_TABLES, payload });
 export const editTable = (payload) => ({ type: EDIT_TABLE, payload });
-export const addTable = (payload) => ({ type: ADD_TABLE, payload });
+// export const addTable = (payload) => ({ type: ADD_TABLE, payload });
 
 export const fetchTables = () => {
   return (dispatch) => {
@@ -24,7 +24,7 @@ export const fetchTables = () => {
   };
 };
 
-export const updateSingleTable = (newTable) => {
+export const updateTableForm = (editTable) => {
   return (dispatch) => {
     const options = {
       method: "PATCH",
@@ -32,32 +32,32 @@ export const updateSingleTable = (newTable) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        status: newTable.status,
-        peopleAmount: newTable.peopleAmount,
-        maxPeopleAmount: newTable.maxPeopleAmount,
-        bill: newTable.bill,
+        status: editTable.status,
+        peopleAmount: editTable.peopleAmount,
+        maxPeopleAmount: editTable.maxPeopleAmount,
+        bill: editTable.bill,
       }),
     };
     fetch("http://localhost:3131/api/tables", options).then(() =>
-      dispatch(addTable(newTable))
+      dispatch(editTable(editTable))
     );
   };
 };
 
-export const addTableRequest = (newTable) => {
-  return (dispatch) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTable),
-    };
-    fetch("http://localhost:3131/api/tables", options).then(() =>
-      dispatch(addTable(newTable))
-    );
-  };
-};
+// export const addTableRequest = (newTable) => {
+//   return (dispatch) => {
+//     const options = {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(newTable),
+//     };
+//     fetch("http://localhost:3131/api/tables", options).then(() =>
+//       dispatch(editTable(newTable))
+//     );
+//   };
+// };
 
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
@@ -69,8 +69,8 @@ const tablesReducer = (statePart = [], action) => {
         table.id === action.payload.id ? { ...table, ...action.payload } : table
       );
 
-    case ADD_TABLE:
-      return [...statePart, { ...action.payload, id: shortid() }];
+    // case ADD_TABLE:
+    //   return [...statePart, { ...action.payload, id: shortid() }];
     default:
       return statePart;
   }

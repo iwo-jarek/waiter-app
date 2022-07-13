@@ -5,14 +5,14 @@ import Home from "./components/pages/Home";
 import NotFound from "./components/pages/NotFound";
 import Header from "./components/views/Header";
 import Footer from "./components/views/Footer";
-import TableForm from "./features/TableForm";
+import TableForm from "./components/features/TableForm";
 import { fetchTables } from "./redux/tablesRedux";
 import { useEffect } from "react";
 
-const App = () => {
+const App = (props) => {
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(fetchTables()), [dispatch]);
+  useEffect(() => dispatch(fetchTables()), [dispatch, props.tables]);
   return (
     <Container>
       <Header />

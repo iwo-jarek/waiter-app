@@ -1,4 +1,4 @@
-import Tables from "../../features/Tables";
+import Tables from "../features/Tables";
 
 const Home = () => {
   return <Tables />;
