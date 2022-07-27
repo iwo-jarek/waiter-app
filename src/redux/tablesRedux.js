@@ -1,8 +1,8 @@
-import shortid from "shortid";
+import { API_URL } from "../config";
 
 //selectors
-export const getAllTables = (state) => state.tables;
-export const getTableById = ({ tables }, tableId) =>
+export const allTables = (state) => state.tables;
+export const tableById = ({ tables }, tableId) =>
   tables.find((table) => table.id === tableId);
 
 // actions
@@ -18,13 +18,13 @@ export const editTable = (payload) => ({ type: EDIT_TABLE, payload });
 
 export const fetchTables = () => {
   return (dispatch) => {
-    fetch("http://localhost:3131/api/tables")
+    fetch(`${API_URL}/tables`)
       .then((res) => res.json())
       .then((tables) => dispatch(updateTables(tables)));
   };
 };
 
-export const updateTableForm = (editTable) => {
+export const updateTableForm = (tableUpdate) => {
   return (dispatch) => {
     const options = {
       method: "PATCH",
@@ -32,32 +32,17 @@ export const updateTableForm = (editTable) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        status: editTable.status,
-        peopleAmount: editTable.peopleAmount,
-        maxPeopleAmount: editTable.maxPeopleAmount,
-        bill: editTable.bill,
+        status: tableUpdate.status,
+        peopleAmount: tableUpdate.peopleAmount,
+        maxPeopleAmount: tableUpdate.maxPeopleAmount,
+        bill: tableUpdate.bill,
       }),
     };
-    fetch("http://localhost:3131/api/tables", options).then(() =>
-      dispatch(editTable(editTable))
+    fetch(`${API_URL}/tables/${tableUpdate.id}`, options).then(() =>
+      dispatch(editTable(tableUpdate))
     );
   };
 };
-
-// export const addTableRequest = (newTable) => {
-//   return (dispatch) => {
-//     const options = {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(newTable),
-//     };
-//     fetch("http://localhost:3131/api/tables", options).then(() =>
-//       dispatch(editTable(newTable))
-//     );
-//   };
-// };
 
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
@@ -68,9 +53,6 @@ const tablesReducer = (statePart = [], action) => {
       return statePart.map((table) =>
         table.id === action.payload.id ? { ...table, ...action.payload } : table
       );
-
-    // case ADD_TABLE:
-    //   return [...statePart, { ...action.payload, id: shortid() }];
     default:
       return statePart;
   }

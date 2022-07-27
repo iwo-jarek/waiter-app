@@ -20,7 +20,8 @@
     "redux-thunk": "2.4.0",
     "sass": "1.43.4",
     "shortid": "^2.2.16",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.73.0"
   },
   "scripts": {
     "start": "npm-run-all -p start:*",

@@ -1,18 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/NotFound";
 import Header from "./components/views/Header";
 import Footer from "./components/views/Footer";
 import TableForm from "./components/features/TableForm";
-import { fetchTables } from "./redux/tablesRedux";
-import { useEffect } from "react";
 
-const App = (props) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => dispatch(fetchTables()), [dispatch, props.tables]);
+const App = () => {
   return (
     <Container>
       <Header />

@@ -1,32 +1,46 @@
+import { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllTables } from "../../redux/tablesRedux";
+import { fetchTables, allTables } from "../../redux/tablesRedux";
 
 const Tables = () => {
-  const table = useSelector((state) => getAllTables(state));
+  const table = useSelector((state) => allTables(state));
   console.log(table);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(fetchTables()), [dispatch]);
+
   return (
-    <section>
-      <div className="d-flex justify-content-between">
+    <>
+      <div className="d-flex justify-content-between m-4">
         <h4>All tables</h4>
       </div>
       {table.map((tables) => (
-        <div key={tables.id} className="d-flex border-bottom">
-          <h2>Table {tables.id}</h2>
-          <h5>Status: {tables.status}</h5>
-          <Link key={tables.id} to={"/table/" + tables.id}>
+        <div
+          key={tables.id}
+          className="d-flex justify-content-start align-items-center border-bottom"
+        >
+          <h3 className="mx-3">Table {tables.id}</h3>
+          <p className="m-2" style={{ fontSize: "13px" }}>
+            <b>Status:</b> {tables.status}
+          </p>
+          <Link
+            key={tables.id}
+            to={"/table/" + tables.id}
+            className="ms-auto m-2"
+          >
             <Button
-              className="d-grid d-md-flex justify-content-md-end"
+              className="d-grid d-flex justify-content-md-end"
               variant="primary"
             >
-              Read more
+              Show more
             </Button>
           </Link>
         </div>
       ))}
-    </section>
+    </>
   );
 };
 
