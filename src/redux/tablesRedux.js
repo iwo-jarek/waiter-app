@@ -9,12 +9,10 @@ export const tableById = ({ tables }, tableId) =>
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName("UPDATE_TABLES");
 const EDIT_TABLE = createActionName("EDIT_TABLES");
-// const ADD_TABLE = createActionName("ADD_TABLE");
 
 // action creators
 export const updateTables = (payload) => ({ type: UPDATE_TABLES, payload });
 export const editTable = (payload) => ({ type: EDIT_TABLE, payload });
-// export const addTable = (payload) => ({ type: ADD_TABLE, payload });
 
 export const fetchTables = () => {
   return (dispatch) => {
